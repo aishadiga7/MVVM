@@ -1,19 +1,27 @@
 package com.example.myapplication.presenter;
 
+import android.util.Log;
+
+import androidx.lifecycle.ViewModel;
+
 import com.example.myapplication.data.Callback;
 import com.example.myapplication.data.Repository;
 import com.example.myapplication.model.User;
 import com.example.myapplication.views.LoginView;
+import com.example.myapplication.views.MainActivity;
 
-public class LoginPresenter {
+public class LoginPresenter extends ViewModel {
 
     private Repository repository;
     private LoginView loginView;
 
 
-    public LoginPresenter(Repository repository, LoginView loginView) {
-        this.repository = repository;
+    public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
+    }
+
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 
     public void performLogin(String userName, String password) {
@@ -47,5 +55,9 @@ public class LoginPresenter {
         return !userName.isEmpty() && !password.isEmpty();
     }
 
-
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d(MainActivity.TAG, "onCleared called, view model destroyed: ");
+    }
 }
