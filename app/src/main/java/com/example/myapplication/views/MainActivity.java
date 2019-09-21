@@ -15,7 +15,7 @@ import com.example.myapplication.presenter.LoginPresenter;
 
 public class MainActivity extends AppCompatActivity implements LoginView{
     ActivityMainBinding mBinding;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity_Log";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
