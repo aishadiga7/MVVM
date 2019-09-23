@@ -2,67 +2,54 @@ package com.example.myapplication.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.data.MainRepositoryImpl;
+import com.example.myapplication.common.AppViewModelFacotry;
+import com.example.myapplication.data.Callback;
 import com.example.myapplication.databinding.ActivityMainBinding;
-import com.example.myapplication.presenter.LoginPresenter;
+import com.example.myapplication.viewmodel.LoginViewModel;
 
-public class MainActivity extends AppCompatActivity implements LoginView{
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class MainActivity extends AppCompatActivity {
     ActivityMainBinding mBinding;
     public static final String TAG = "MainActivity_Log";
-
+    LoginViewModel loginViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-         dismissLoader();
+       super.onCreate(savedInstanceState);
 
-        //final LoginPresenter presenter = new LoginPresenter(new MainRepositoryImpl(),this);
-        final LoginPresenter presenter = ViewModelProviders.of(this).get(LoginPresenter.class);
-        presenter.setLoginView(this);
-        presenter.setRepository(new MainRepositoryImpl());
-        Log.d(TAG, "onCreate: Presenter created"+ presenter);
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
-        mBinding.button.setOnClickListener(new View.OnClickListener() {
+
+        loginViewModel.init();
+
+        loginViewModel.getApiResult().observe(this, new Observer<String>() {
             @Override
-            public void onClick(View view) {
-                String password = mBinding.password.getText().toString();
-                String userName = mBinding.userName.getText().toString();
-                presenter.performLogin(userName, password);
+            public void onChanged(String s) {
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
             }
         });
 
+
+
+
+
+
+
+
+            
     }
 
-
-
-
-    @Override
-    public void showLoader() {
-        mBinding.loaderGroup.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void dismissLoader() {
-        mBinding.loaderGroup.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showMessage(String message) {
-        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
 }
