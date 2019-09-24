@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.data.MainRepositoryImpl;
 import com.example.myapplication.viewmodel.LoginViewModel;
-import com.example.myapplication.views.LoginView;
 
 public class AppViewModelFacotry implements ViewModelProvider.Factory {
 
