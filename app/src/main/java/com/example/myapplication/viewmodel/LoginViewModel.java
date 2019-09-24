@@ -10,19 +10,15 @@ import androidx.lifecycle.ViewModel;
 import com.example.myapplication.data.Callback;
 import com.example.myapplication.data.Repository;
 import com.example.myapplication.model.User;
+import com.example.myapplication.views.uimodel.Result;
 
 public class LoginViewModel extends ViewModel {
     private Repository repository;
-    MutableLiveData<User> liveData = new MutableLiveData<>();
-    MutableLiveData<String> errorLiveData = new MutableLiveData<>();
+    MutableLiveData<Result<User>> liveData = new MutableLiveData<>();
     MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
 
 
-    public LiveData<String> getErrorLiveData() {
-        return errorLiveData;
-    }
-
-    public LiveData<User> getLoginLiveData() {
+    public LiveData<Result<User>> getLoginLiveData() {
         return liveData;
     }
 
@@ -50,12 +46,11 @@ public class LoginViewModel extends ViewModel {
                 @Override
                 public void onError(Throwable error) {
                     progressLiveData.setValue(false);
-                    errorLiveData.setValue("Login failed!!");
+
                 }
             });
         } else {
             progressLiveData.setValue(false);
-            errorLiveData.setValue("Insert values");
         }
     }
 

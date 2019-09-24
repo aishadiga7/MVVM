@@ -16,6 +16,7 @@ import com.example.myapplication.common.AppViewModelFacotry;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.model.User;
 import com.example.myapplication.viewmodel.LoginViewModel;
+import com.example.myapplication.views.uimodel.Result;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,17 +32,17 @@ public class MainActivity extends AppCompatActivity {
         AppViewModelFacotry facotry = new AppViewModelFacotry();
         loginViewModel = ViewModelProviders.of(this, facotry).get(LoginViewModel.class);
 
-        loginViewModel.getLoginLiveData().observe(this, new Observer<User>() {
+        loginViewModel.getLoginLiveData().observe(this, new Observer<Result<User>>() {
             @Override
-            public void onChanged(User s) {
-                Toast.makeText(MainActivity.this, s.firstName+ " "+s.lastName, Toast.LENGTH_SHORT).show();
-            }
-        });
+            public void onChanged(Result<User> result) {
+                if (result.isSuccess()) {
+                    User user = result.getResult();
+                    Toast.makeText(MainActivity.this, user.firstName+ " "+user.lastName, Toast.LENGTH_SHORT).show();
 
-        loginViewModel.getErrorLiveData().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+                }else {
+
+                }
+
             }
         });
 
