@@ -1,6 +1,6 @@
 package com.example.myapplication.views.uimodel;
 
-public abstract class Result<T> {
+public class Result<T> {
 
     T result;
     Throwable error;

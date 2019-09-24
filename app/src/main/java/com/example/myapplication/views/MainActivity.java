@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
                     User user = result.getResult();
                     Toast.makeText(MainActivity.this, user.firstName+ " "+user.lastName, Toast.LENGTH_SHORT).show();
 
-                }else {
-
+                } else {
+                    Toast.makeText(MainActivity.this, result.getError().getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }

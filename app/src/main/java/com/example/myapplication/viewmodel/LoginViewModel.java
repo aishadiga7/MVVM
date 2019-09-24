@@ -40,17 +40,27 @@ public class LoginViewModel extends ViewModel {
                 public void onSuccess(User result) {
                     progressLiveData.setValue(false);
                     repository.saveUser(result);
-                    liveData.setValue(result);
+                    Result<User> userResult = new Result<User>();
+                    userResult.setResult(result);
+                    userResult.setIsSuccess(true);
+                    liveData.setValue(userResult);
                 }
 
                 @Override
                 public void onError(Throwable error) {
                     progressLiveData.setValue(false);
-
+                    Result<User> userResult = new Result<User>();
+                    userResult.setError(error);
+                    userResult.setIsSuccess(false);
+                    liveData.setValue(userResult);
                 }
             });
         } else {
             progressLiveData.setValue(false);
+            Result<User> userResult = new Result<User>();
+            userResult.setError(new Error("Invalid inputs"));
+            userResult.setIsSuccess(false);
+            liveData.setValue(userResult);
         }
     }
 
