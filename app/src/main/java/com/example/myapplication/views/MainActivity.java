@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mBinding.loaderGroup.setVisibility(View.GONE);
         AppViewModelFacotry facotry = new AppViewModelFacotry();
         loginViewModel = ViewModelProviders.of(this, facotry).get(LoginViewModel.class);
-
+        mBinding.setViewModel(loginViewModel);
+        mBinding.setLifecycleOwner(this);
         loginViewModel.getLoginLiveData().observe(this, new Observer<Result<User>>() {
             @Override
             public void onChanged(Result<User> result) {
@@ -46,12 +46,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getProgressLiveData().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean s) {
-                mBinding.loaderGroup.setVisibility(s ? View.VISIBLE : View.GONE);
-            }
-        });
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override

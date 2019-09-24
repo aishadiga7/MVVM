@@ -3,6 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.myapplication.viewmodel.LoginViewModel" />
+
+        <import type="android.view.View" />
+
+
+    </data>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -87,6 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="progressBar,loadingText"
+            android:visibility="@{viewModel.getProgressLiveData()? View.VISIBLE : View.GONE}"
             tools:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

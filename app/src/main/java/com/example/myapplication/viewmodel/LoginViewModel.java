@@ -14,8 +14,8 @@ import com.example.myapplication.views.uimodel.Result;
 
 public class LoginViewModel extends ViewModel {
     private Repository repository;
-    MutableLiveData<Result<User>> liveData = new MutableLiveData<>();
-    MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
+    private MutableLiveData<Result<User>> liveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
 
 
     public LiveData<Result<User>> getLoginLiveData() {
