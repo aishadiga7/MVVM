@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.data.Injector;
 import com.example.myapplication.data.MainRepositoryImpl;
+import com.example.myapplication.viewmodel.HomeViewModel;
 import com.example.myapplication.viewmodel.LoginViewModel;
 
 public class AppViewModelFacotry implements ViewModelProvider.Factory {
@@ -18,9 +19,12 @@ public class AppViewModelFacotry implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
        if (modelClass == LoginViewModel.class) {
            return (T) new LoginViewModel(Injector.getRepository());
-       } else {
-           return null;
+       } else if (modelClass == HomeViewModel.class){
+           return (T) new HomeViewModel(Injector.getRepository());
        }
+
+
+       return null;
 
     }
 }
