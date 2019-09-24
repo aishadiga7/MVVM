@@ -6,13 +6,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.myapplication.R;
 import com.example.myapplication.common.AppViewModelFacotry;
+import com.example.myapplication.common.Navigator;
+import com.example.myapplication.common.Router;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.example.myapplication.model.User;
 import com.example.myapplication.viewmodel.LoginViewModel;
@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 if (result.isSuccess()) {
                     User user = result.getResult();
                     Toast.makeText(MainActivity.this, user.firstName+ " "+user.lastName, Toast.LENGTH_SHORT).show();
-
+                    Navigator navigator = new Router(MainActivity.this);
+                    navigator.launchHomeScreen(user.firstName);
                 } else {
                     Toast.makeText(MainActivity.this, result.getError().getMessage(), Toast.LENGTH_SHORT).show();
                 }

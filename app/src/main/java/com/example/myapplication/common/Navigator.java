@@ -2,7 +2,7 @@ package com.example.myapplication.common;
 
 public interface Navigator {
 
-    void launchHomeActicvity();
+    void launchHomeScreen(String name);
 
     void launchLoginScreen();
 

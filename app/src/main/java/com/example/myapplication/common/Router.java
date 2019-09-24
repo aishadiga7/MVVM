@@ -15,8 +15,10 @@ public class Router implements Navigator {
     }
 
     @Override
-    public void launchHomeActicvity() {
-        activity.startActivity(new Intent(activity, HomeActivity.class));
+    public void launchHomeScreen(String name) {
+        Intent intent = new Intent(activity, HomeActivity.class);
+        intent.putExtra("name",name);
+        activity.startActivity(intent);
     }
 
     @Override
