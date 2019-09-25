@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import com.example.myapplication.data.remote.remote.model.ProductResponse;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 
@@ -22,4 +23,6 @@ public interface Repository {
 
 
     void getProducts(Callback<List<Product>> callback);
+
+    ProductResponse.Newarrival geNewArrivals();
 }

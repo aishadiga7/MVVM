@@ -70,6 +70,7 @@ public class MainRepositoryImpl implements Repository {
             @Override
             public void onResponse(Call<ItemListResponse> call, Response<ItemListResponse> response) {
                 if (response != null && response.isSuccessful()) {
+                   preference.put(PreferenceKeys.NEWARRIVAL,response.body().newarrival);
                    List<Product> productsList = new ArrayList<>();
                     for (ProductResponse watch : response.body().watches) {
                         Product product = new Product();
@@ -87,13 +88,21 @@ public class MainRepositoryImpl implements Repository {
 
             @Override
             public void onFailure(Call<ItemListResponse> call, Throwable t) {
-
+                if (callback != null) {
+                    callback.onError(t);
+                }
             }
         });
+    }
+
+    @Override
+    public ProductResponse.Newarrival geNewArrivals() {
+        return (ProductResponse.Newarrival) preference.get(PreferenceKeys.NEWARRIVAL);
     }
 
 
     public static class PreferenceKeys {
         public static final String USER = "user";
+        public static final String NEWARRIVAL = "newarrival";
     }
 }

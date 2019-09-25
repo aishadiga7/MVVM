@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import com.example.myapplication.common.AppViewModelFacotry;
 import com.example.myapplication.data.remote.ApiService;
 
 import okhttp3.OkHttpClient;
@@ -10,12 +11,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Injector {
     public static Repository repository;
     public static ApiService apiService;
+    public static AppViewModelFacotry appViewModelFacotry;
 
     public static void init() {
         initRetrofit();
+        initViewModelFactory();
 
         if(repository == null)
             repository = new MainRepositoryImpl(apiService);
+    }
+
+    private static void initViewModelFactory() {
+        appViewModelFacotry = new AppViewModelFacotry();
+    }
+
+    public static AppViewModelFacotry getAppViewModelFacotry() {
+        return appViewModelFacotry;
     }
 
     private static void initRetrofit() {

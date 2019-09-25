@@ -9,24 +9,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.data.Injector;
 import com.example.myapplication.databinding.Page1Binding;
+import com.example.myapplication.viewmodel.HomeViewModel;
 import com.example.myapplication.views.adapter.ProductsListAdapter;
 import com.example.myapplication.views.uimodel.ProductUIModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProductListFragment extends Fragment {
 
     private Page1Binding binding;
+    private final ProductsListAdapter adapter = new ProductsListAdapter();
+    private HomeViewModel homeViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Nullable
@@ -44,20 +51,24 @@ public class ProductListFragment extends Fragment {
 
 
     private void initRecyclerView() {
-        RecyclerView movieRecyclerView = binding.recyclerview;
-        if (movieRecyclerView != null) {
-            movieRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-            ProductsListAdapter adapter = new ProductsListAdapter();
-            movieRecyclerView.setAdapter(adapter);
-            movieRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        if (binding.recyclerview != null) {
+            binding.recyclerview.setLayoutManager(new LinearLayoutManager(this.getContext()));
+            binding.recyclerview.setAdapter(adapter);
+            binding.recyclerview.setItemAnimator(new DefaultItemAnimator());
         }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       initRecyclerView();
-
+        initRecyclerView();
+        homeViewModel = ViewModelProviders.of(getActivity(), Injector.getAppViewModelFacotry()).get(HomeViewModel.class);
+        homeViewModel.getProductList().observe(this, new Observer<List<ProductUIModel>>() {
+            @Override
+            public void onChanged(List<ProductUIModel> productUIModels) {
+                adapter.setList(productUIModels);
+            }
+        });
 
     }
 }

@@ -2,20 +2,15 @@ package com.example.myapplication.views.homescreen;
 
 import android.os.Bundle;
 
-import com.example.myapplication.common.AppViewModelFacotry;
-import com.example.myapplication.databinding.ActivityHomeBinding;
-import com.example.myapplication.viewmodel.HomeViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.view.View;
-
 import com.example.myapplication.R;
+import com.example.myapplication.common.AppViewModelFacotry;
+import com.example.myapplication.databinding.ActivityHomeBinding;
+import com.example.myapplication.viewmodel.HomeViewModel;
+import com.example.myapplication.views.adapter.ViewpagerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding mBinding;
@@ -27,9 +22,16 @@ public class HomeActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         AppViewModelFacotry appViewModelFacotry = new AppViewModelFacotry();
         homeViewModel = ViewModelProviders.of(this, appViewModelFacotry).get(HomeViewModel.class);
+        setUpViewPager();
+        homeViewModel.fetchData();
 
 
+    }
 
+    private void setUpViewPager() {
+        ViewpagerAdapter viewpagerAdapter = new ViewpagerAdapter(getSupportFragmentManager());
+        mBinding.viewPager.setAdapter(viewpagerAdapter);
+        mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
     }
 
     @Override
