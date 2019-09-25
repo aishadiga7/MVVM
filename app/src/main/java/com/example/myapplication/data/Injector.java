@@ -1,6 +1,10 @@
 package com.example.myapplication.data;
 
+import androidx.room.Room;
+
 import com.example.myapplication.common.AppViewModelFacotry;
+import com.example.myapplication.common.MyApplication;
+import com.example.myapplication.data.local.AppDataBase;
 import com.example.myapplication.data.remote.ApiService;
 
 import okhttp3.OkHttpClient;
@@ -12,13 +16,29 @@ public class Injector {
     public static Repository repository;
     public static ApiService apiService;
     public static AppViewModelFacotry appViewModelFacotry;
+    public static AppDataBase dataBase;
 
-    public static void init() {
+
+    public static void init(MyApplication myApplication) {
+
         initRetrofit();
         initViewModelFactory();
+        initDb(myApplication);
 
         if(repository == null)
-            repository = new MainRepositoryImpl(apiService);
+            repository = new MainRepositoryImpl(apiService, dataBase);
+    }
+
+    private static void initDb(MyApplication myApplication) {
+        dataBase = Room.
+                 databaseBuilder(myApplication, AppDataBase.class, "app-database")
+                .build();
+
+
+    }
+
+    public static AppDataBase getDataBase() {
+        return dataBase;
     }
 
     private static void initViewModelFactory() {

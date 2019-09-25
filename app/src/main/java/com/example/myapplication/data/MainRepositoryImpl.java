@@ -1,5 +1,6 @@
 package com.example.myapplication.data;
 
+import com.example.myapplication.data.local.AppDataBase;
 import com.example.myapplication.data.remote.ApiService;
 import com.example.myapplication.data.remote.model.LoginResponse;
 import com.example.myapplication.data.remote.remote.model.ItemListResponse;
@@ -23,9 +24,11 @@ public class MainRepositoryImpl implements Repository {
     private static HashMap<String, Object> preference = new HashMap<>();
     private static boolean mockError = false; // just a flag to mock error
     private ApiService apiService;
+    private AppDataBase databse;
 
-    public MainRepositoryImpl(ApiService apiService) {
+    public MainRepositoryImpl(ApiService apiService, AppDataBase databse) {
         this.apiService = apiService;
+        this.databse = databse;
     }
     /*
     This method intercats with the backend server and gets the login result
@@ -56,12 +59,12 @@ public class MainRepositoryImpl implements Repository {
 
     @Override
     public void saveUser(User user) {
-        preference.put(PreferenceKeys.USER, user);
+        databse.userDAO().insert(user);
     }
 
     @Override
-    public void getUser() {
-        preference.get(PreferenceKeys.USER);
+    public User getUser() {
+     return databse.userDAO().getUsers().get(0);
     }
 
     @Override

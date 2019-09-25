@@ -26,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
         homeViewModel.fetchData();
 
 
+
     }
 
     private void setUpViewPager() {

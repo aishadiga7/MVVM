@@ -7,4 +7,5 @@ import com.example.myapplication.model.User;
 
 @Database(version = 1,entities = {User.class})
 public abstract class AppDataBase extends RoomDatabase {
+    public abstract UserDAO userDAO();
 }

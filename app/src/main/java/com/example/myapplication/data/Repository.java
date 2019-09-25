@@ -19,7 +19,7 @@ public interface Repository {
      */
     void saveUser(User user);
 
-    void getUser();
+    User getUser();
 
 
     void getProducts(Callback<List<Product>> callback);
