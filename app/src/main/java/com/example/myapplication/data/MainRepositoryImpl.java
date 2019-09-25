@@ -2,9 +2,14 @@ package com.example.myapplication.data;
 
 import com.example.myapplication.data.remote.ApiService;
 import com.example.myapplication.data.remote.model.LoginResponse;
+import com.example.myapplication.data.remote.remote.model.ItemListResponse;
+import com.example.myapplication.data.remote.remote.model.ProductResponse;
+import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -57,6 +62,34 @@ public class MainRepositoryImpl implements Repository {
     @Override
     public void getUser() {
         preference.get(PreferenceKeys.USER);
+    }
+
+    @Override
+    public void getProducts(Callback<List<Product>> callback) {
+        apiService.getProducts().enqueue(new retrofit2.Callback<ItemListResponse>() {
+            @Override
+            public void onResponse(Call<ItemListResponse> call, Response<ItemListResponse> response) {
+                if (response != null && response.isSuccessful()) {
+                   List<Product> productsList = new ArrayList<>();
+                    for (ProductResponse watch : response.body().watches) {
+                        Product product = new Product();
+                        product.setName(watch.brand);
+                        product.setDescription(watch.model);
+                        product.setPrice(watch.price);
+                        product.setUrl(watch.image);
+                        productsList.add(product);
+                    }
+                    if(callback != null) {
+                        callback.onSuccess(productsList);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ItemListResponse> call, Throwable t) {
+
+            }
+        });
     }
 
 

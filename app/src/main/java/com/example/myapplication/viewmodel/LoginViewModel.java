@@ -1,30 +1,26 @@
 package com.example.myapplication.viewmodel;
 
-import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.data.Callback;
 import com.example.myapplication.data.Repository;
 import com.example.myapplication.model.User;
 import com.example.myapplication.views.uimodel.Result;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends BaseViewModel {
     private Repository repository;
     private MutableLiveData<Result<User>> liveData = new MutableLiveData<>();
-    private MutableLiveData<Boolean> progressLiveData = new MutableLiveData<>();
+
 
 
     public LiveData<Result<User>> getLoginLiveData() {
         return liveData;
     }
 
-    public LiveData<Boolean> getProgressLiveData() {
-        return progressLiveData;
-    }
+
 
     public LoginViewModel(Repository repository) {
         this.repository = repository;
@@ -32,13 +28,13 @@ public class LoginViewModel extends ViewModel {
 
 
     public void performLogin(String userName, String password) {
-        progressLiveData.setValue(true);
+        setProgress(true);
         if (validInputs(userName,  password)) {
             repository.login(userName, password, new Callback<User>() {
 
                 @Override
                 public void onSuccess(User result) {
-                    progressLiveData.setValue(false);
+                    setProgress(false);
                     repository.saveUser(result);
                     Result<User> userResult = new Result<User>();
                     userResult.setResult(result);
@@ -48,7 +44,7 @@ public class LoginViewModel extends ViewModel {
 
                 @Override
                 public void onError(Throwable error) {
-                    progressLiveData.setValue(false);
+                    setProgress(false);
                     Result<User> userResult = new Result<User>();
                     userResult.setError(error);
                     userResult.setIsSuccess(false);
@@ -56,7 +52,7 @@ public class LoginViewModel extends ViewModel {
                 }
             });
         } else {
-            progressLiveData.setValue(false);
+           setProgress(false);
             Result<User> userResult = new Result<User>();
             userResult.setError(new Error("Invalid inputs"));
             userResult.setIsSuccess(false);

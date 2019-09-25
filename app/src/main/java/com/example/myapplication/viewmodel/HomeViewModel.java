@@ -1,15 +1,17 @@
 package com.example.myapplication.viewmodel;
 
-import androidx.lifecycle.ViewModel;
+
 
 import com.example.myapplication.data.Repository;
 
-public class HomeViewModel extends ViewModel {
+public class HomeViewModel extends BaseViewModel {
 
     private Repository repository;
 
-    public HomeViewModel(Repository repository) {
 
+    public HomeViewModel(Repository repository) {
         this.repository = repository;
     }
+
+
 }
