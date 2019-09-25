@@ -3,7 +3,7 @@ package com.example.myapplication.common;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.example.myapplication.views.HomeActivity;
+import com.example.myapplication.views.homescreen.HomeActivity;
 import com.example.myapplication.views.MainActivity;
 
 public class Router implements Navigator {

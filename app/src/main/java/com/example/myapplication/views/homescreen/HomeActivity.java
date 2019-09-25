@@ -1,4 +1,4 @@
-package com.example.myapplication.views;
+package com.example.myapplication.views.homescreen;
 
 import android.os.Bundle;
 
@@ -27,6 +27,8 @@ public class HomeActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         AppViewModelFacotry appViewModelFacotry = new AppViewModelFacotry();
         homeViewModel = ViewModelProviders.of(this, appViewModelFacotry).get(HomeViewModel.class);
+
+
 
     }
 
