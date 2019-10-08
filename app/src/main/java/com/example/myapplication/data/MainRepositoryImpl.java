@@ -1,5 +1,7 @@
 package com.example.myapplication.data;
 
+import android.content.Context;
+
 import com.example.myapplication.data.remote.ApiService;
 import com.example.myapplication.data.remote.model.LoginResponse;
 import com.example.myapplication.data.remote.remote.model.ItemListResponse;
@@ -11,8 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /*
 This class will iomplement the repository interface and doers the actual logic of it

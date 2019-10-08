@@ -17,8 +17,8 @@ public class Injector {
         initRetrofit();
         initViewModelFactory();
 
-        if(repository == null)
-            repository = new MainRepositoryImpl(apiService);
+       // if(repository == null)
+           // repository = new MainRepositoryImpl(apiService);
     }
 
     private static void initViewModelFactory() {
