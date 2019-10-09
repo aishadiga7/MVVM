@@ -51,12 +51,14 @@ public class NetworkModule {
         return logging;
     }
 
+
+
+
     @Provides
     @ApplicationScope
-    public static Repository provideRepository(ApiService apiService) {
+    public static MainRepositoryImpl provideMainRepository(ApiService apiService) {
         return new MainRepositoryImpl(apiService);
     }
-
     @Provides
     @BaseURL
     public static String provideBaseURL(){

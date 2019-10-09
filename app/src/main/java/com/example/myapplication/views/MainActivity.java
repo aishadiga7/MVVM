@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
    @AppName
    String appName;
 
+   @Inject
+   Repository repository;
+
 
 
 
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         MyApplication.appComponent.inject(this);
-
 
 
         loginViewModel = ViewModelProviders.of(this, facotry).get(LoginViewModel.class);
