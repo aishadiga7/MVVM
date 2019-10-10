@@ -3,7 +3,8 @@ package com.example.myapplication.data.remote.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse
+public class
+LoginResponse
 {
     @SerializedName("is_success")
     public boolean is_success;

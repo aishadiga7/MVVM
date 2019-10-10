@@ -9,10 +9,14 @@ import com.example.myapplication.data.MainRepositoryImpl;
 import com.example.myapplication.viewmodel.HomeViewModel;
 import com.example.myapplication.viewmodel.LoginViewModel;
 
+import javax.inject.Inject;
+
 public class AppViewModelFacotry implements ViewModelProvider.Factory {
 
 
-
+    @Inject
+    public AppViewModelFacotry() {
+    }
 
     @NonNull
     @Override

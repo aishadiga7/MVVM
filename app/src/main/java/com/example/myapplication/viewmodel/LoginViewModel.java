@@ -14,8 +14,6 @@ public class LoginViewModel extends BaseViewModel {
     private Repository repository;
     private MutableLiveData<Result<User>> liveData = new MutableLiveData<>();
 
-
-
     public LiveData<Result<User>> getLoginLiveData() {
         return liveData;
     }

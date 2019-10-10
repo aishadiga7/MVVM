@@ -7,6 +7,7 @@ import com.example.myapplication.data.remote.ApiService;
 import com.example.myapplication.data.remote.model.LoginResponse;
 import com.example.myapplication.data.remote.remote.model.ItemListResponse;
 import com.example.myapplication.data.remote.remote.model.ProductResponse;
+import com.example.myapplication.di.ApplicationScope;
 import com.example.myapplication.model.Product;
 import com.example.myapplication.model.User;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -23,6 +25,7 @@ import retrofit2.Retrofit;
 /*
 This class will iomplement the repository interface and doers the actual logic of it
  */
+@ApplicationScope
 public class MainRepositoryImpl implements Repository {
 
     // this hashmap mocks the shared preference
@@ -30,6 +33,7 @@ public class MainRepositoryImpl implements Repository {
     private static boolean mockError = false; // just a flag to mock error
     private ApiService apiService;
 
+    @Inject
     public MainRepositoryImpl(ApiService apiService) {
         this.apiService = apiService;
     }

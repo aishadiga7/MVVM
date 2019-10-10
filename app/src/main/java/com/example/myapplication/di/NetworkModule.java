@@ -26,7 +26,7 @@ public class NetworkModule {
 
     @Provides
     @ApplicationScope
-    public static Retrofit provideRetrofit(OkHttpClient client,String baseUrl){
+    public static Retrofit provideRetrofit(OkHttpClient client,@BaseURL String baseUrl){
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
@@ -54,11 +54,7 @@ public class NetworkModule {
 
 
 
-    @Provides
-    @ApplicationScope
-    public static MainRepositoryImpl provideMainRepository(ApiService apiService) {
-        return new MainRepositoryImpl(apiService);
-    }
+
     @Provides
     @BaseURL
     public static String provideBaseURL(){

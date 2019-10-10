@@ -14,10 +14,7 @@ import dagger.Provides;
 @Module
 public class FactoryModule {
 
-    @Provides
-    public static AppViewModelFacotry provideFactory() {
-        return new AppViewModelFacotry();
-    }
+
 
     @Provides
     public static Context appContext(){

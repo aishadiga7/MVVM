@@ -1,7 +1,6 @@
 package com.example.myapplication.views;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,18 +14,17 @@ import com.example.myapplication.common.AppViewModelFacotry;
 import com.example.myapplication.common.MyApplication;
 import com.example.myapplication.common.Navigator;
 import com.example.myapplication.common.Router;
-import com.example.myapplication.data.MainRepositoryImpl;
 import com.example.myapplication.data.Repository;
 import com.example.myapplication.data.remote.ApiService;
 import com.example.myapplication.databinding.ActivityMainBinding;
-import com.example.myapplication.di.AppName;
+import com.example.myapplication.di.DaggerMainActivityComponent;
+import com.example.myapplication.di.MainActivityComponent;
+import com.example.myapplication.di.MainActivityObject;
 import com.example.myapplication.model.User;
 import com.example.myapplication.viewmodel.LoginViewModel;
 import com.example.myapplication.views.uimodel.Result;
 
 import javax.inject.Inject;
-
-import retrofit2.Retrofit;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -35,15 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
 
 
-   @Inject
-   AppViewModelFacotry  facotry;
 
-   @Inject
-   @AppName
-   String appName;
+    @Inject
+    MainActivityObject object;
 
-   @Inject
-   Repository repository;
+    @Inject
+    ApiService apiService;
+
 
 
 
@@ -55,10 +51,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        MyApplication.appComponent.inject(this);
+
+        MainActivityComponent component = DaggerMainActivityComponent.builder()
+                .appComponent(MyApplication.appComponent)
+                .build();
+
+        component.inject(this);
 
 
-        loginViewModel = ViewModelProviders.of(this, facotry).get(LoginViewModel.class);
+        loginViewModel = ViewModelProviders.of(this, new AppViewModelFacotry()).get(LoginViewModel.class);
         mBinding.setViewModel(loginViewModel);
         mBinding.setLifecycleOwner(this);
         loginViewModel.getLoginLiveData().observe(this, new Observer<Result<User>>() {

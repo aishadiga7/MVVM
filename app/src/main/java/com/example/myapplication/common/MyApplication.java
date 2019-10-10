@@ -17,7 +17,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Injector.init();
-context = this;
+        context = this;
         appComponent = DaggerAppComponent.builder().build();
 
 
